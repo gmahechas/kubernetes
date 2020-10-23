@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: api-gateway-nestjs-pod
+  labels:
+    app: api-gateway-nestjs
+spec:
+  containers:
+    - name: api-gateway-nestjs
+      image: gmahechas/api-gateway-nestjs
+      imagePullPolicy: IfNotPresent
+      ports:  
+        - containerPort: 3000

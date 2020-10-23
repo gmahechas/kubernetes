@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: api-gateway-nestjs
+  labels:
+    app: api-gateway-nestjs
+  annotations:
+    kubernetes.io/change-cause: "Initial Deploy"
+spec:
+  revisionHistoryLimit: 3
+  replicas: 3
+  selector:
+    matchLabels:
+      app: api-gateway-nestjs-pod
+  template:
+    metadata:
+      labels:
+        app: api-gateway-nestjs-pod
+    spec:
+      containers:
+        - name: api-gateway-nestjs
+          image: gmahechas/api-gateway-nestjs
+          imagePullPolicy: IfNotPresent
+          ports:  
+            - containerPort: 3000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: api-gateway-nestjs
+  labels:
+    app: api-gateway-nestjs
+spec:
+  type: NodePort
+  selector:
+    app: api-gateway-nestjs-pod
+  ports:
+    - protocol: TCP
+      port: 3050
+      targetPort: 3000
+      nodePort: 31515
