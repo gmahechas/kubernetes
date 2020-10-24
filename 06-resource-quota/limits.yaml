@@ -10,3 +10,24 @@ spec:
     requests.cpu: "2"
     requests.memory: 2Gi
     pods: "2"
+---
+apiVersion: v1
+kind: LimitRange
+metadata:
+  namespace: api-gateway-nestjs
+  name: api-gateway-nestjs
+spec:
+  limits:
+  - max: # max for all container in pod
+      cpu: "4"
+      memory: "4Gi"
+    min: # min for all container in pod
+      cpu: "2"
+      memory: "2Gi"
+    default: # default limit container in pod
+      cpu: "2"
+      memory: "2Gi"
+    defaultRequest: # default resource container configuration
+      cpu: "2"
+      memory: "2Gi"
+    type: Container
